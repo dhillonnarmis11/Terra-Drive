@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://xgyeo7c4pxov"]
+
+[ext_resource type="Texture2D" uid="uid://dp75t8uhw62bx" path="res://circle.png" id="1_kwfd8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci28e"]
+albedo_color = Color(0.0784314, 0.180392, 0.0705882, 0.0705882)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_agfoc"]
+material = SubResource("StandardMaterial3D_ci28e")
+size = Vector2(20, 20)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6wwtt"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 0.5, 10)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+color = Color(0.563668, 0.775404, 0.816559, 0.827451)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="Curve" id="Curve_vy4dc"]
+_limits = [0.0, 0.1, 0.0, 1.0]
+_data = [Vector2(0.0118343, 0), 0.0, 8.14745, 0, 0, Vector2(0.0118443, 0), 0.0, 0.0, 0, 0, Vector2(0.0887574, 0.0144478), 0.36403, 0.36403, 0, 0, Vector2(0.497041, 0.0855774), 0.0, 0.0, 0, 0, Vector2(0.810651, 0.0564044), -0.185844, -0.185844, 0, 0, Vector2(0.931953, 0.00100858), -0.436452, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_baj4n"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_kwfd8")
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_w4igq"]
+material = SubResource("StandardMaterial3D_baj4n")
+shape = 0
+section_length = 0.1
+section_segments = 1
+curve = SubResource("Curve_vy4dc")
+
+[node name="Rain" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.78286, 0)
+mesh = SubResource("PlaneMesh_agfoc")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="MeshInstance3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1327, 0)
+amount = 400
+lifetime = 2.0
+randomness = 0.48
+visibility_aabb = AABB(-10, -20, -10, 20, 20, 20)
+trail_enabled = true
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_6wwtt")
+draw_pass_1 = SubResource("RibbonTrailMesh_w4igq")
