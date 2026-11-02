@@ -36,7 +36,7 @@ Terra-Drive is a game-development project exploring vehicle movement, interactiv
 | Steer right | Right Arrow |
 | Brake | Space |
 
-The car script uses Godot's `ui_up`, `ui_down`, `ui_left`, and `ui_right` actions. The project also defines W/A/S/D input actions, but those are not referenced by the car script shown in this repository.
+The car script uses Godot's `ui_up`, `ui_down`, `ui_left`, and `ui_right` actions.
 
 ## Getting Started
 
